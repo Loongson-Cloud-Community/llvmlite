@@ -13,7 +13,7 @@ RUN mkdir -p /tmp/llvm &&\
     mkdir llvm-build &&\
     cd llvm-build &&\
     cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/opt/llvm-${llvm_version} -DLLVM_ENABLE_PROJECTS="clang" -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="LoongArch" ../llvm -DCMAKE_C_FLAGS="-mcmodel=medium -mno-relax" &&\
-    ninja && ninja install && rm -rf /tmp/*
+    ninja -j$(nproc) && ninja install && rm -rf /tmp/*
 
 ENV PATH="/opt/llvm-${llvm_version}/bin:$PATH"
 
